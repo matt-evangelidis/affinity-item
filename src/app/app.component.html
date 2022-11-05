@@ -1,213 +1,235 @@
 <body>
-  <mat-card class="mat-card-flex">
-    <mat-card-header>
-      <mat-card-title>The Affinity</mat-card-title>
-      <mat-card-subtitle>
-        <i>Wondrous item, very rare (requires attunement)</i>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p class="description">
-        Contained in a gunmetal green rifle-length weapons case with an attached
-        screen and keypad, the Affinity is a weapon chassis that can be
-        configured into multiple forms and modified with a variety of additional
-        properties using the case it comes in.
-      </p>
-      <p class="description">
-        During a short or long rest, or by spending ten minutes to activate the
-        case, the Affinity can be reconfigured. From the options below, choose
-        an ammunition type, a range, a firing mode, and a single-shot
-        attachment. In its default setting, the Affinity comes with AP Rounds,
-        Medium range, Semi-Auto firing mode, and the grenade launcher
-        attachment.
-      </p>
-    </mat-card-content>
-  </mat-card>
-  <br />
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Current Configuration</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="form">
-        <div class="config-row">
-          <mat-form-field appearance="fill">
-            <mat-label>Ammunition Type</mat-label>
-            <mat-select formControlName="ammoType">
-              <mat-option
-                *ngFor="let ammoType of itemDataSource.ammoTypes"
-                [value]="ammoType"
-                (onSelectionChange)="
-                  storeChoice(itemFieldKeys.AMMO_TYPE, $event)
-                "
-                >{{ ammoType.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-          <p>
-            {{ form.get("ammoType")?.value.effect }}
-          </p>
-        </div>
-        <br />
-        <div class="config-row">
-          <mat-form-field appearance="fill">
-            <mat-label>Range</mat-label>
-            <mat-select formControlName="range">
-              <mat-option
-                *ngFor="let range of itemDataSource.ranges"
-                [value]="range"
-                (onSelectionChange)="storeChoice(itemFieldKeys.RANGE, $event)"
-                >{{ range.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-          <div style="display: flex; flex-direction: column">
-            <p>
-              {{ form.get("range")?.value.damage }}
-              <br />
-              {{ form.get("range")?.value.properties }}
-            </p>
-          </div>
-        </div>
-        <br />
-        <div class="config-row">
-          <mat-form-field appearance="fill">
-            <mat-label>Firing Mode</mat-label>
-            <mat-select formControlName="firingMode">
-              <mat-option
-                *ngFor="let firingMode of itemDataSource.firingModes"
-                [value]="firingMode"
-                (onSelectionChange)="
-                  storeChoice(itemFieldKeys.FIRING_MODE, $event)
-                "
-                >{{ firingMode.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-          <p>
-            {{ form.get("firingMode")?.value.effect }}
-          </p>
-        </div>
-        <br />
-        <div class="config-row">
-          <mat-form-field appearance="fill">
-            <mat-label>Single-Shot Attachment</mat-label>
-            <mat-select formControlName="singleShotAttachment">
-              <mat-option
-                *ngFor="
-                  let singleShotAttachment of itemDataSource.singleShotAttachments
-                "
-                [value]="singleShotAttachment"
-                (onSelectionChange)="
-                  storeChoice(itemFieldKeys.SINGLE_SHOT_ATTACHMENT, $event)
-                "
-                >{{ singleShotAttachment.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-          <p>
-            {{ form.get("singleShotAttachment")?.value.effect }}
-          </p>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  <br />
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Ammunition Type</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <table mat-table [dataSource]="itemDataSource.ammoTypes">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let ammoType">{{ ammoType.name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="effect">
-          <th mat-header-cell *matHeaderCellDef>Effect</th>
-          <td mat-cell *matCellDef="let ammoType">{{ ammoType.effect }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns.ammoType"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns.ammoType"
-        ></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Range</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <table mat-table [dataSource]="itemDataSource.ranges">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Range</th>
-          <td mat-cell *matCellDef="let range">{{ range.name }}</td>
-        </ng-container>
-        <ng-container matColumnDef="damage">
-          <th mat-header-cell *matHeaderCellDef>Damage</th>
-          <td mat-cell *matCellDef="let range">{{ range.damage }}</td>
-        </ng-container>
-        <ng-container matColumnDef="properties">
-          <th mat-header-cell *matHeaderCellDef>Properties</th>
-          <td mat-cell *matCellDef="let range">{{ range.properties }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns.range"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns.range"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Firing Mode</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <table mat-table [dataSource]="itemDataSource.firingModes">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let firingMode">
-            {{ firingMode.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="effect">
-          <th mat-header-cell *matHeaderCellDef>Effect</th>
-          <td mat-cell *matCellDef="let firingMode">
-            {{ firingMode.effect }}
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns.firingMode"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns.firingMode"
-        ></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Single-Shot Attachment</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <table mat-table [dataSource]="itemDataSource.singleShotAttachments">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let singleShotAttachment">
-            {{ singleShotAttachment.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="effect">
-          <th mat-header-cell *matHeaderCellDef>Effect</th>
-          <td mat-cell *matCellDef="let singleShotAttachment">
-            {{ singleShotAttachment.effect }}
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns.firingMode"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns.firingMode"
-        ></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
+	<mat-card class="mat-card-flex">
+		<mat-card-header>
+			<mat-card-title>The Affinity</mat-card-title>
+			<mat-card-subtitle>
+				<i>Wondrous item, very rare (requires attunement)</i>
+			</mat-card-subtitle>
+		</mat-card-header>
+		<mat-card-content>
+			<p class="description">
+				Contained in a gunmetal green rifle-length weapons case with an attached
+				screen and keypad, the Affinity is a weapon chassis that can be
+				configured into multiple forms and modified with a variety of additional
+				properties using the case it comes in.
+			</p>
+			<p class="description">
+				During a short or long rest, or by spending ten minutes to activate the
+				case, the Affinity can be reconfigured. From the options below, choose
+				an ammunition type, a range, a firing mode, and a single-shot
+				attachment. In its default setting, the Affinity comes with AP Rounds,
+				Medium range, Semi-Auto firing mode, and the grenade launcher
+				attachment.
+			</p>
+		</mat-card-content>
+	</mat-card>
+	<br />
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Current Configuration</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<form [formGroup]="form">
+				<div class="config-row">
+					<mat-form-field appearance="fill">
+						<mat-label>Ammunition Type</mat-label>
+						<mat-select formControlName="ammoType">
+							<mat-option
+								*ngFor="let ammoType of itemDataSource.ammoTypes"
+								[value]="ammoType"
+								(onSelectionChange)="
+									storeChoice(itemFieldKeys.AMMO_TYPE, $event)
+								"
+								>{{ ammoType.name }}</mat-option
+							>
+						</mat-select>
+					</mat-form-field>
+					<p>
+						{{ form.get("ammoType")?.value.effect }}
+					</p>
+				</div>
+				<br />
+				<div class="config-row">
+					<mat-form-field appearance="fill">
+						<mat-label>Range</mat-label>
+						<mat-select formControlName="range">
+							<mat-option
+								*ngFor="let range of itemDataSource.ranges"
+								[value]="range"
+								(onSelectionChange)="storeChoice(itemFieldKeys.RANGE, $event)"
+								>{{ range.name }}</mat-option
+							>
+						</mat-select>
+					</mat-form-field>
+					<div style="display: flex; flex-direction: column">
+						<p>
+							{{ form.get("range")?.value.damage }}
+							<br />
+							{{ form.get("range")?.value.properties }}
+						</p>
+					</div>
+				</div>
+				<br />
+				<div class="config-row">
+					<mat-form-field appearance="fill">
+						<mat-label>Firing Mode</mat-label>
+						<mat-select formControlName="firingMode">
+							<mat-option
+								*ngFor="let firingMode of itemDataSource.firingModes"
+								[value]="firingMode"
+								(onSelectionChange)="
+									storeChoice(itemFieldKeys.FIRING_MODE, $event)
+								"
+								>{{ firingMode.name }}</mat-option
+							>
+						</mat-select>
+					</mat-form-field>
+					<p>
+						{{ form.get("firingMode")?.value.effect }}
+					</p>
+				</div>
+				<br />
+				<div class="config-row">
+					<mat-form-field appearance="fill">
+						<mat-label>Single-Shot Attachment</mat-label>
+						<mat-select formControlName="singleShotAttachment">
+							<mat-option
+								*ngFor="
+									let singleShotAttachment of itemDataSource.singleShotAttachments
+								"
+								[value]="singleShotAttachment"
+								(onSelectionChange)="
+									storeChoice(itemFieldKeys.SINGLE_SHOT_ATTACHMENT, $event)
+								"
+								>{{ singleShotAttachment.name }}</mat-option
+							>
+						</mat-select>
+					</mat-form-field>
+					<p>
+						{{ form.get("singleShotAttachment")?.value.effect }}
+					</p>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+	<br />
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Ammunition Type</mat-panel-title>
+			</mat-expansion-panel-header>
+			<mat-card>
+				<mat-card-content>
+					<table mat-table [dataSource]="itemDataSource.ammoTypes">
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef>Name</th>
+							<td mat-cell *matCellDef="let ammoType">{{ ammoType.name }}</td>
+						</ng-container>
+						<ng-container matColumnDef="effect">
+							<th mat-header-cell *matHeaderCellDef>Effect</th>
+							<td mat-cell *matCellDef="let ammoType">{{ ammoType.effect }}</td>
+						</ng-container>
+						<tr
+							mat-header-row
+							*matHeaderRowDef="displayedColumns.ammoType"
+						></tr>
+						<tr
+							mat-row
+							*matRowDef="let row; columns: displayedColumns.ammoType"
+						></tr>
+					</table>
+				</mat-card-content>
+			</mat-card>
+		</mat-expansion-panel>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Range</mat-panel-title>
+			</mat-expansion-panel-header>
+			<mat-card>
+				<mat-card-content>
+					<table mat-table [dataSource]="itemDataSource.ranges">
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef>Range</th>
+							<td mat-cell *matCellDef="let range">{{ range.name }}</td>
+						</ng-container>
+						<ng-container matColumnDef="damage">
+							<th mat-header-cell *matHeaderCellDef>Damage</th>
+							<td mat-cell *matCellDef="let range">{{ range.damage }}</td>
+						</ng-container>
+						<ng-container matColumnDef="properties">
+							<th mat-header-cell *matHeaderCellDef>Properties</th>
+							<td mat-cell *matCellDef="let range">{{ range.properties }}</td>
+						</ng-container>
+						<tr mat-header-row *matHeaderRowDef="displayedColumns.range"></tr>
+						<tr
+							mat-row
+							*matRowDef="let row; columns: displayedColumns.range"
+						></tr>
+					</table>
+				</mat-card-content>
+			</mat-card>
+		</mat-expansion-panel>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Firing Mode</mat-panel-title>
+			</mat-expansion-panel-header>
+			<mat-card>
+				<mat-card-content>
+					<table mat-table [dataSource]="itemDataSource.firingModes">
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef>Name</th>
+							<td mat-cell *matCellDef="let firingMode">
+								{{ firingMode.name }}
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="effect">
+							<th mat-header-cell *matHeaderCellDef>Effect</th>
+							<td mat-cell *matCellDef="let firingMode">
+								{{ firingMode.effect }}
+							</td>
+						</ng-container>
+						<tr
+							mat-header-row
+							*matHeaderRowDef="displayedColumns.firingMode"
+						></tr>
+						<tr
+							mat-row
+							*matRowDef="let row; columns: displayedColumns.firingMode"
+						></tr>
+					</table>
+				</mat-card-content>
+			</mat-card>
+		</mat-expansion-panel>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>Single-Shot Attachment</mat-panel-title>
+			</mat-expansion-panel-header>
+			<mat-card>
+				<mat-card-content>
+					<table mat-table [dataSource]="itemDataSource.singleShotAttachments">
+						<ng-container matColumnDef="name">
+							<th mat-header-cell *matHeaderCellDef>Name</th>
+							<td mat-cell *matCellDef="let singleShotAttachment">
+								{{ singleShotAttachment.name }}
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="effect">
+							<th mat-header-cell *matHeaderCellDef>Effect</th>
+							<td mat-cell *matCellDef="let singleShotAttachment">
+								{{ singleShotAttachment.effect }}
+							</td>
+						</ng-container>
+						<tr
+							mat-header-row
+							*matHeaderRowDef="displayedColumns.firingMode"
+						></tr>
+						<tr
+							mat-row
+							*matRowDef="let row; columns: displayedColumns.firingMode"
+						></tr>
+					</table>
+				</mat-card-content>
+			</mat-card>
+		</mat-expansion-panel>
+	</mat-accordion>
 </body>
