@@ -1,0 +1,32 @@
+body {
+  box-sizing: border-box;
+  table {
+    td {
+      padding-right: 10px;
+    }
+  }
+}
+
+.mat-card-flex {
+  display: flex;
+  flex-direction: column;
+  max-width: max-content;
+}
+
+.description {
+  text-align: center;
+}
+
+.config-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  p {
+    margin-left: 15px;
+  }
+}
