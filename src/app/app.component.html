@@ -131,11 +131,11 @@
 						</ng-container>
 						<tr
 							mat-header-row
-							*matHeaderRowDef="displayedColumns.ammoType"
+							*matHeaderRowDef="displayedAffinityColumns.ammoType"
 						></tr>
 						<tr
 							mat-row
-							*matRowDef="let row; columns: displayedColumns.ammoType"
+							*matRowDef="let row; columns: displayedAffinityColumns.ammoType"
 						></tr>
 					</table>
 				</mat-card-content>
@@ -160,10 +160,13 @@
 							<th mat-header-cell *matHeaderCellDef>Properties</th>
 							<td mat-cell *matCellDef="let range">{{ range.properties }}</td>
 						</ng-container>
-						<tr mat-header-row *matHeaderRowDef="displayedColumns.range"></tr>
+						<tr
+							mat-header-row
+							*matHeaderRowDef="displayedAffinityColumns.range"
+						></tr>
 						<tr
 							mat-row
-							*matRowDef="let row; columns: displayedColumns.range"
+							*matRowDef="let row; columns: displayedAffinityColumns.range"
 						></tr>
 					</table>
 				</mat-card-content>
@@ -190,11 +193,11 @@
 						</ng-container>
 						<tr
 							mat-header-row
-							*matHeaderRowDef="displayedColumns.firingMode"
+							*matHeaderRowDef="displayedAffinityColumns.firingMode"
 						></tr>
 						<tr
 							mat-row
-							*matRowDef="let row; columns: displayedColumns.firingMode"
+							*matRowDef="let row; columns: displayedAffinityColumns.firingMode"
 						></tr>
 					</table>
 				</mat-card-content>
@@ -221,15 +224,66 @@
 						</ng-container>
 						<tr
 							mat-header-row
-							*matHeaderRowDef="displayedColumns.firingMode"
+							*matHeaderRowDef="displayedAffinityColumns.singleShotAttachment"
 						></tr>
 						<tr
 							mat-row
-							*matRowDef="let row; columns: displayedColumns.firingMode"
+							*matRowDef="
+								let row;
+								columns: displayedAffinityColumns.singleShotAttachment
+							"
 						></tr>
 					</table>
 				</mat-card-content>
 			</mat-card>
 		</mat-expansion-panel>
 	</mat-accordion>
+	<br />
+	<mat-card>
+		<mat-card-header>
+			<mat-card-title>Universal Ammo Press</mat-card-title>
+			<mat-card-subtitle>
+				<i>Wondrous item, uncommon</i>
+			</mat-card-subtitle>
+		</mat-card-header>
+		<mat-card-content>
+			<p class="description">
+				{{ ammoPressItemDescription }}
+			</p>
+		</mat-card-content>
+	</mat-card>
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title>Ammunition</mat-panel-title>
+		</mat-expansion-panel-header>
+		<mat-card>
+			<mat-card-content>
+				<table mat-table [dataSource]="ammoDataSource">
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef>Name</th>
+						<td mat-cell *matCellDef="let ammo">
+							{{ ammo.name }}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="cost">
+						<th mat-header-cell *matHeaderCellDef>Cost</th>
+						<td mat-cell *matCellDef="let ammo">
+							{{ ammo.cost }}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="weight">
+						<th mat-header-cell *matHeaderCellDef>Weight</th>
+						<td mat-cell *matCellDef="let ammo">
+							{{ ammo.weight }}
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedAmmoPressColumns"></tr>
+					<tr
+						mat-row
+						*matRowDef="let row; columns: displayedAmmoPressColumns"
+					></tr>
+				</table>
+			</mat-card-content>
+		</mat-card>
+	</mat-expansion-panel>
 </body>
